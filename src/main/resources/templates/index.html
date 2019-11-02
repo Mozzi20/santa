@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        <div class="jumbotron bg-secondary border-light mt-3 text-light">
+            <h1>Om leken</h1>
+            <p>
+                Secret santa är en rolig presentlek som körs både IRL och online. 
+                Det går ut på att du först svarar på frågor om vad du gillar (t.ex. sött eller surt godis). 
+                Sedan får din secret santa reda på svaren och ska välja en present som den tror passar just dig. 
+                Du ska såklart också ordna en present åt personer du är secret santa åt. Presenten behöver inte vara dyr, eller ens kosta pengar. 
+                Så länge den andra personer blir glad av din present så har du lyckats!
+            </p>
+        </div>
+        
+
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

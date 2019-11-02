@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+
+        <div class="jumbotron bg-secondary mt-3 text-light pt-3 pb-3" th:inline="text">
+            <p>Det verkar som om du kommer för sent. [[${event.name}]] har redan börjat, men du hade inte angett någon info.</p>
+        </div>
+
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

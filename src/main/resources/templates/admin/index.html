@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        
+        <div class="jumbotron bg-secondary mt-3 text-light">
+            <a class="btn btn-primary" href="/admin/events">Events</a>
+            <a class="btn btn-primary" href="/admin/users">Users</a>
+        </div>
+    
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

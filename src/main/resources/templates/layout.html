@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>Secret Santa</title>
+</head>
+<body>
+
+    <header th:fragment="header" class="bg-secondary mt-3 pb-0 rounded">
+        <nav class="navbar ml-3">
+            <a class="navbar-brand text-light" href="/"><h1>Secret Santa</h1></a>
+            <ul class="nav">
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link text-light" href="/admin">Adminpanel</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')">
+                    <a class="nav-link text-light" href="/wishlist">Fyll i formuläret</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+                        <button class="btn btn-secondary text-light" type="submit">Logga ut</button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link text-light" href="/oauth2/authorization/google">Logga in</a>
+                </li>
+            </ul>
+        </nav>
+        <canvas></canvas>
+    </header>
+
+    <footer th:fragment="footer" class="bg-secondary rounded font-weight-light text-light">
+        <p class="p-3">
+            Vänligen rapportera eventuella buggar till Movitz.
+            Glöm inte att ge projektet en stjärna på <a class="text-light font-weight-bold" href="https://github.com/Mozzi20/santa">GitHub</a>!
+        </p>
+        <script src="/snow.js"></script>
+        <link rel="stylesheet" href="/snow.css">
+    </footer>
+    
+</body>
+</html>

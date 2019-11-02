@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+
+        <div class="jumbotron bg-secondary mt-3 text-light pt-3 pb-3">
+
+            <h1 th:text="${event.name}">Eventnamn</h1>
+            <p>
+                Här ska du svara på frågor kring vad du gillar osv.
+                Sedan kommer din secret santa att få den informationen och försöka hitta en perfekt present till dig.
+            </p>
+            <p th:inline="text">
+                Glöm inte att gå in hit [[${#dates.format(event.wishlistDeadlineDate, "EEEE 'den' d MMMM")}]] för att se svaren från personen som du ska vara secret santa åt!
+            </p>
+            <form th:action="@{/wishlist}" method="post">
+                <div class="form-group" th:each="question : ${event.questions}">
+                    <label th:for="'answer-' + ${question.id}" th:text="${question.question}">Fråga</label>
+                    <textarea 
+                        class="form-control" 
+                        th:name="${'answers[' + question.id + ']'}" 
+                        th:id="${'answer-' + question.id}" 
+                        th:text="${wishlist?.answers?.get(question)}"
+                        cols="30"
+                        rows="5"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Spara</button>
+            </form>
+        </div>
+
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

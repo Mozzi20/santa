@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        
+        <div class="jumbotron bg-secondary mt-3 text-light">
+            <table class="table text-light table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+
+                        <th>Roll</th>
+                        <th>Registrerad datum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}" th:object="${user}">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{email}"></td>
+                        <td th:text="*{role}"></td>
+                        <td th:text="*{createdDate}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

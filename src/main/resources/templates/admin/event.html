@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        <div class="jumbotron bg-secondary mt-3 text-light rounded">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h1>Event</h1>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-info" th:href="@{'/admin/events/' + ${event.id} + '/wishlists'}">Se önskelistor</a>        
+                        </div>
+                    </div>
+                    <table class="table text-light">
+                        <tbody th:object="${event}">
+                            <tr>
+                                <th>Namn</th>
+                                <td th:text="*{name}"></td>
+                            </tr>
+                            <tr>
+                                <th>Antal önskelistor</th>
+                                <td th:text="*{wishlists.size()}"></td>
+                            </tr>
+                            <tr>
+                                <th>Start datum</th>
+                                <td th:text="*{startDate}"></td>
+                            </tr>
+                            <tr>
+                                <th>Deadline datum</th>
+                                <td th:text="*{wishlistDeadlineDate}"></td>
+                            </tr>
+                            <tr>
+                                <th>Slut datum</th>
+                                <td th:text="*{endDate}"></td>
+                            </tr>
+                            <tr>
+                                <th>Skapad datum</th>
+                                <td th:text="*{createdDate}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <h3>Skapa fråga</h3>
+                    <div class="alert alert-danger" th:each="error : ${errors?.allErrors}" th:text="${error.defaultMessage}"></div>
+                    <form th:action="@{'/admin/events/' + ${event.id} + '/questions'}" method="post" th:object="${createQuestionDTO}">
+                        <div class="form-group">
+                            <label for="question">Fråga</label>
+                            <input class="form-control" type="text" th:field="*{question}">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Skapa fråga</button>
+                    </form>
+                </div>
+            </div>
+            <h3>Frågor</h3>
+            <p th:if="${event.questions.size() == 0}">
+                Eventet har inga frågor än (du borde skapa några)
+            </p>
+            <table th:unless="${event.questions.size() == 0}" class="table text-light">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fråga</th>
+                        <th>Skapad datum</th>
+                        <th>Hantera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="question : ${event.questions}" th:object="${question}">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{question}"></td>
+                        <td th:text="*{createdDate}"></td>
+                        <td>
+                            <form th:action="@{'/admin/events/' + ${event.id} + '/questions/' + ${question.id} + '/delete'}" method="post">
+                                <button class="btn btn-danger" type="submit">Radera</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

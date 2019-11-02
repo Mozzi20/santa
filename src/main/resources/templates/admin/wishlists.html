@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        <div class="jumbotron bg-secondary mt-3 text-light rounded">
+            
+            <table class="table text-light">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Användare</th>
+                        <th>Secret santa</th>
+                        <th>Hantera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div th:each="wishlist : ${event.wishlists}" th:object="${wishlist}" th:remove="tag">
+                        <tr>
+                            <td th:text="*{id}"></td>
+                            <td th:text="*{user.email}"></td>
+                            <td th:text="*{santa?.email}"></td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-toggle="collapse" th:attr="data-target=*{'#collapse-questions-' + id}">Visa svar</button>
+                            </td>
+                        </tr>
+                        <tr th:id="*{'collapse-questions-' + id}" class="collapse out">
+                            <td colspan="4">
+                                <table class="table text-light">
+                                    <thead>
+                                        <tr>
+                                            <th>Fråga</th>
+                                            <th>Svar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="question : *{answers}">
+                                            <td th:text="${question.key.question}"></td>
+                                            <td th:text="${question.value}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

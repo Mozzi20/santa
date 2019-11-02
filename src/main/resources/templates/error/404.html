@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        <div class="jumbotron bg-secondary border-light mt-3 text-light">
+            <img class="img-fluid rounded mx-auto" style="width: 50%; display: block;" src="/404.png" alt="Fel 404. Kunde inte hitta det du sökte efter.">
+        </div>
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

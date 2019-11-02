@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${oauth.id}
+            client-secret: ${oauth.secret}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    username: ${db.username}
+    password: ${db.password}
+    url: jdbc:mysql://localhost:3306/santa?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
