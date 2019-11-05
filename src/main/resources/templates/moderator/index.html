@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        
+        <div class="jumbotron bg-secondary mt-3 text-light rounded">
+
+            <div>
+                <h3>Vem ska presenten till?</h3>
+                <div>
+
+                </div>
+                <form th:action="@{/moderator/gift_lookup}" method="post">
+                    <input type="number" name="wishlistId" id="wishlistId">
+                    <button class="btn btn-primary" type="submit">Lookup</button>
+                </form>
+            </div>
+
+            <h1>Ifyllda formulär</h1>
+            <table class="table text-light">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Namn</th>
+                        <th>Santa</th>
+                        <th>UserHasGiven</th>
+                        <th>Hantera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="wishlist : ${event.wishlists}" th:object="${wishlist}">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{user.email}"></td>
+                        <td th:text="*{santa?.email}"></td>
+                        <td th:text="${wishlist.userHasGiven ? 'Ja' : 'Nej'}"></td>
+                        <td>
+                            <form th:action="@{/moderator/wishlist}" method="post">
+                                <input type="hidden" name="userHasGiven" th:value="*{!userHasGiven}">
+                                <input type="hidden" name="wishlistId" th:value="*{id}">
+                                <button th:unless="*{userHasGiven}" class="btn btn-danger" type="submit">Markera present given</button>
+                                <button th:if="*{userHasGiven}" class="btn btn-success" type="submit">Markera present icke given</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

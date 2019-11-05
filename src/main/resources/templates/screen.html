@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="jumbotron bg-dark mt-5 text-light text-center">
+            <h1 style="zoom: 2;">Secret Santa</h1>
+            <div class="align-middle">
+                
+                <div th:if="${!ongoing}">
+                    <h2>Just nu finns det inget event</h2>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div th:if="${ongoing}" th:remove="tag">
+                    <div th:if="${afterDeadline}">
+                        <h2>
+                            Glöm inte att lämna presenterna innan <span th:text="${#dates.format(endDate, 'dd/MM')}"></span>!
+                        </h2>
+                    </div>
+                    <div th:unless="${afterDeadline}">
+                        <h2>
+                            Registera er innan <span th:text="${#dates.format(wishlistDeadlineDate, 'dd/MM')}"></span>! Mer info på hemsidan.
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <h2>https://santa.ssis.nu</h2>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background-color: black;
+            zoom: 2;
+        }
+    </style>
+
+</body>
+</html>

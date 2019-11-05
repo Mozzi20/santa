@@ -55,10 +55,6 @@ public class User implements OidcUser {
 		return new HashMap<String, Object>();
 	}
 
-	public static enum Role {
-		ADMIN, PARTICIPANT
-	}
-
 	@Override
 	public Map<String, Object> getClaims() {
 		// TODO Auto-generated method stub
@@ -75,6 +71,10 @@ public class User implements OidcUser {
 	public OidcIdToken getIdToken() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static enum Role {
+		ADMIN, PARTICIPANT, MODERATOR
 	}
 
 }

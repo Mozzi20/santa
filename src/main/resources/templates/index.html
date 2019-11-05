@@ -15,11 +15,30 @@
                 Du ska såklart också ordna en present åt personer du är secret santa åt. Presenten behöver inte vara dyr, eller ens kosta pengar. 
                 Så länge den andra personer blir glad av din present så har du lyckats!
             </p>
+            <div>
+                <h1>FAQ - Frequently asked questions</h1>
+                <p>
+                    Om du har en fråga kring leken så kan du ställa och få den besvarad här.
+                </p>
+                <div th:if="${FAQS.size() == 0}">
+                    Inga frågor har besvarats än.
+                </div>
+                <div th:each="FAQ : ${FAQS}">
+                    <h3 th:text="${'Fråga: ' + FAQ.question}"></h3>
+                    <p th:text="${'Svar: ' + FAQ.answer}"></p>
+                </div>
+                <hr>
+                <h3>Ställ fråga</h3>
+                <form th:action="@{/}" method="post" th:object="${FAQDTO}">
+                    <div class="alert alert-danger" th:each="error : ${errors?.allErrors}" th:text="${error.defaultMessage}"></div>
+                    <div class="form-group">
+                        <textarea class="form-control" th:field="*{question}" cols="30" rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Ställ fråga</button>
+                </form>
+            </div>
         </div>
-        
-
         <footer th:replace="layout :: footer"></footer>
-        
     </div>
 </body>
 </html>

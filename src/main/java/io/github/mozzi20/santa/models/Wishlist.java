@@ -39,6 +39,8 @@ public class Wishlist {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Event event;
 	
+	private Boolean userHasGiven = false;
+	
 	@ElementCollection
 	@CollectionTable(
 			name = "answers", 

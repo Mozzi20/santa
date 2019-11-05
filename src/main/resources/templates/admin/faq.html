@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <div th:replace="layout :: head" th:remove="tag"></div>
+</head>
+<body>
+
+    <div class="container">
+        <header th:replace="layout :: header"></header>
+        
+        <div class="jumbotron bg-secondary mt-3 text-light">
+            <h1>FAQs</h1>
+            <p th:if="${FAQS.size() == 0}">
+                Inga frågor är ställda än.
+            </p>
+            <div th:each="FAQ : ${FAQS}">
+                <h2 th:text="${FAQ.question}"></h2>
+                <form th:action="@{'/admin/faq/' + ${FAQ.id} + '/answer'}" method="post">
+                    <div class="form-group">
+                        <textarea class="form-control" name="answer" id="answer" th:text="${FAQ.answer}" cols="30" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Svara</button>
+                </form>
+                <hr>
+            </div>
+        </div>
+    
+        <footer th:replace="layout :: footer"></footer>
+        
+    </div>
+</body>
+</html>

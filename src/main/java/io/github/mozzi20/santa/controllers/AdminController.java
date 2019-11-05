@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.github.mozzi20.santa.datatransferobjects.CreateEventDTO;
 import io.github.mozzi20.santa.datatransferobjects.CreateQuestionDTO;
 import io.github.mozzi20.santa.exceptions.ResourceNotFoundException;
 import io.github.mozzi20.santa.models.Event;
+import io.github.mozzi20.santa.models.User;
 import io.github.mozzi20.santa.services.EventService;
+import io.github.mozzi20.santa.services.FAQService;
 import io.github.mozzi20.santa.services.UserService;
 
 @Controller
@@ -28,6 +31,9 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FAQService FAQService;
 	
 	@GetMapping
 	public String index() {
@@ -106,11 +112,34 @@ public class AdminController {
 	}
 	
 	@GetMapping("/users")
-	public String users(
-			Model model
-			) {
+	public String users(Model model) {
+		model.addAttribute("roles", User.Role.values());
 		model.addAttribute("users", userService.getAllUsers());
 		return "admin/users";
+	}
+	
+	@PostMapping("/users/{userId}/role")
+	public String updateRole(
+			@PathVariable String userId,
+			@RequestParam User.Role role
+			) {
+		userService.updateRole(role, userId);
+		return "redirect:/admin/users";
+	}
+	
+	@GetMapping("/faq")
+	public String getFaqs(Model model) {
+		model.addAttribute("FAQS", FAQService.getAllFAQs());
+		return "admin/faq";
+	}
+	
+	@PostMapping("/faq/{FAQId}/answer")
+	public String answerFaq(
+			@RequestParam String answer,
+			@PathVariable Integer FAQId
+			) {
+		FAQService.answerFAQ(answer, FAQId);
+		return "redirect:/admin/faq";
 	}
 
 }

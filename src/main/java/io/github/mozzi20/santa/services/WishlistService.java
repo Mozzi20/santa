@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.mozzi20.santa.datatransferobjects.WishlistDTO;
+import io.github.mozzi20.santa.exceptions.ResourceNotFoundException;
 import io.github.mozzi20.santa.models.Event;
 import io.github.mozzi20.santa.models.Question;
 import io.github.mozzi20.santa.models.User;
@@ -79,6 +80,17 @@ public class WishlistService {
 	@Transactional(readOnly=true)
 	public Optional<Wishlist> getWishlist() {
 		return wishlistRepo.findCurrentWishlistByUser(userService.getUserId().get());
+	}
+
+	public void setUserHasGiven(Boolean userHasGiven, Integer wishlistId) {
+		Wishlist wishlist = wishlistRepo.findById(wishlistId).orElseThrow(ResourceNotFoundException::new);
+		wishlist.setUserHasGiven(userHasGiven);
+		wishlistRepo.save(wishlist);
+	}
+	
+	@Transactional(readOnly=true)
+	public Optional<Wishlist> getWishlistById(Integer wishlistId) {
+		return wishlistRepo.findById(wishlistId);
 	}
 
 }

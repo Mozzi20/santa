@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
 				.antMatchers("/wishlist/**").hasRole("PARTICIPANT")
 			.and()
 			.oauth2Login()
@@ -37,5 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.and()
 		;
+		
 	}
 }

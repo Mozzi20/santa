@@ -8,8 +8,10 @@
     <div class="container">
         <header th:replace="layout :: header"></header>
         <div class="jumbotron bg-secondary mt-3 text-light rounded">
-            
-            <table class="table text-light">
+            <div th:if="${event.wishlists.size() == 0}">
+                <p>Det finns inga önskelistor än.</p>
+            </div>
+            <table th:unless="${event.wishlists.size() == 0}" class="table text-light">
                 <thead>
                     <tr>
                         <th>Id</th>

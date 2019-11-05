@@ -50,7 +50,7 @@
                 <div class="col">
                     <h3>Skapa fråga</h3>
                     <div class="alert alert-danger" th:each="error : ${errors?.allErrors}" th:text="${error.defaultMessage}"></div>
-                    <form th:action="@{'/admin/events/' + ${event.id} + '/questions'}" method="post" th:object="${createQuestionDTO}">
+                    <form th:action="@{'/admin/events/' + ${event.id} + '/questions'}" method="post" th:object="${createQuestionDTO}" autocomplete="off">
                         <div class="form-group">
                             <label for="question">Fråga</label>
                             <input class="form-control" type="text" th:field="*{question}">

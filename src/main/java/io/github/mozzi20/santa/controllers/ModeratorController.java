@@ -1,6 +1,5 @@
 package io.github.mozzi20.santa.controllers;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import io.github.mozzi20.santa.datatransferobjects.WishlistDTO;
 import io.github.mozzi20.santa.models.Event;
 import io.github.mozzi20.santa.models.Wishlist;
 import io.github.mozzi20.santa.services.EventService;
 import io.github.mozzi20.santa.services.WishlistService;
 
 @Controller
-@RequestMapping("/wishlist")
-public class WishlistController {
+@RequestMapping("/moderator")
+public class ModeratorController {
 	
 	@Autowired
 	private EventService eventService;
@@ -29,29 +29,30 @@ public class WishlistController {
 	@GetMapping
 	public String index(Model model) {
 		Optional<Event> event = eventService.getCurrentEvent();
-		if(!event.isPresent()) {
-			return "noevent";
-		}
-		
-		model.addAttribute(event.get());
-		
-		if(event.get().getWishlistDeadlineDate().after(new Date())) {
-			wishlistService.getWishlist().ifPresent(model::addAttribute);
-			return "wishlist";
+		if(event.isPresent()) {
+			model.addAttribute(event.get());
+			return "moderator/index";
 		} else {
-			Optional<Wishlist> wishlist = wishlistService.getTargetsWishlist();
-			if(!wishlist.isPresent()) {
-				return "toolate";
-			}
-			model.addAttribute("wishlist", wishlist.get());
-			return "targetsWishlist";
+			return "noevent";
 		}
 	}
 	
-	@PostMapping
-	public String saveWishlist(WishlistDTO wishlistDTO) {
-		wishlistService.saveWishlist(wishlistDTO);
-		return "redirect:/wishlist";
+	@PostMapping("/wishlist")
+	public String userHasGiven(
+			@RequestParam Boolean userHasGiven,
+			@RequestParam Integer wishlistId
+			) {
+		wishlistService.setUserHasGiven(userHasGiven, wishlistId);
+		return "redirect:/moderator";
 	}
-
+	
+	@PostMapping("/gift_lookup")
+	public String giftLookup(
+			@RequestParam Integer wishlistId,
+			RedirectAttributes redirect
+			) {
+		Optional<Wishlist> wishlist = wishlistService.getWishlistById(wishlistId);
+		return "redirect:/moderator";
+	}
+	
 }

@@ -14,7 +14,6 @@
                     <tr>
                         <th>Id</th>
                         <th>Email</th>
-
                         <th>Roll</th>
                         <th>Registrerad datum</th>
                     </tr>
@@ -23,7 +22,19 @@
                     <tr th:each="user : ${users}" th:object="${user}">
                         <td th:text="*{id}"></td>
                         <td th:text="*{email}"></td>
-                        <td th:text="*{role}"></td>
+                        <td>
+                            <form th:id="'user-' + *{id}" th:action="@{'/admin/users/' + *{id} + '/role'}" method="post">
+                                <div class="form-group">
+                                    <select th:attr="oninput='document.forms[\'user-' + *{id} + '\'].submit();'" class="form-control" name="role" id="role">
+                                        <option
+                                            th:each="role : ${roles}"
+                                            th:value="${role}"
+                                            th:text="${role}"
+                                            th:attr="selected=${role == user.role} ? 'selected' : 'off'"></option>
+                                    </select>
+                                </div>
+                            </form>
+                        </td>
                         <td th:text="*{createdDate}"></td>
                     </tr>
                 </tbody>

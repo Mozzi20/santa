@@ -26,6 +26,10 @@ public class LoginHandler implements AuthenticationSuccessHandler {
 				response.sendRedirect("/wishlist");
 				return;
 			}
+			if(authority.getAuthority().equals("ROLE_MODERATOR")) {
+				response.sendRedirect("/moderator");
+				return;
+			}
 		}
 		response.sendRedirect("/");
 	}
