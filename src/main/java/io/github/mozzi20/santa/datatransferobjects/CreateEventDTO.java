@@ -19,15 +19,15 @@ public class CreateEventDTO {
 	@NotEmpty(message="Ett namn måste anges")
 	private String name;
 	
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm") // works with chrome
 	@NotNull(message="Ett startdatum måste anges")
 	private Date startDate;
 	
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
 	@NotNull(message="Ett datum för önskelist-deadline måste anges")
 	private Date wishlistDeadlineDate;
 	
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
 	@NotNull(message="Ett slutdatum måste anges")
 	private Date endDate;
 

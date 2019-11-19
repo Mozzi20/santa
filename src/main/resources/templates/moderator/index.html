@@ -41,7 +41,7 @@
                     <tr th:each="wishlist : ${event.wishlists}" th:object="${wishlist}">
                         <td th:text="*{id}"></td>
                         <td th:text="*{user.email}"></td>
-                        <td th:text="*{target?.user.email}"></td>
+                        <td th:text="*{target?.user?.email}"></td>
                         <td th:text="${wishlist.userHasGiven ? 'Ja' : 'Nej'}"></td>
                         <td>
                             <form th:action="@{/moderator/wishlist}" method="post">

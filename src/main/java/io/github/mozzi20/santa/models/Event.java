@@ -29,6 +29,7 @@ public class Event {
 	private String name;
 	
 	@OneToMany(mappedBy="event", fetch=FetchType.LAZY)
+	@OrderBy("id ASC")
 	private Set<Wishlist> wishlists;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
