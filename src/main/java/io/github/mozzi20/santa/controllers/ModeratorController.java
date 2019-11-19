@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.github.mozzi20.santa.models.Event;
-import io.github.mozzi20.santa.models.Wishlist;
+import io.github.mozzi20.santa.models.User;
 import io.github.mozzi20.santa.services.EventService;
 import io.github.mozzi20.santa.services.WishlistService;
 
@@ -51,7 +51,10 @@ public class ModeratorController {
 			@RequestParam Integer wishlistId,
 			RedirectAttributes redirect
 			) {
-		Optional<Wishlist> wishlist = wishlistService.getWishlistById(wishlistId);
+		Optional<User> receiver = wishlistService.getGiftReceiver(wishlistId);
+		if(receiver.isPresent()) {
+			redirect.addFlashAttribute("receiver", receiver.get().getEmail());
+		}
 		return "redirect:/moderator";
 	}
 	

@@ -62,19 +62,25 @@ public class WishlistService {
 		List<Wishlist> wishlists = new ArrayList<Wishlist>(event.getWishlists());
 		Wishlist lastWishlist = wishlists.get(wishlists.size() - 1);
 		for(Wishlist wishlist : event.getWishlists()) {
-			wishlist.setSanta(lastWishlist.getUser());
-			wishlistRepo.save(wishlist);
+			wishlist.setTarget(lastWishlist);
 			lastWishlist = wishlist;
 		}
+		wishlistRepo.saveAll(wishlists);
 	}
 	
 	public Optional<Wishlist> getTargetsWishlist() {
 		Event event = eventService.getCurrentEvent().get();
-		if(event.getWishlists().stream().allMatch(wl -> wl.getSanta() == null)) {
+		if(event.getWishlists().stream().allMatch(wl -> wl.getTarget() == null)) {
 			assignSantas(event);
 		}
 		
-		return wishlistRepo.findCurrentTargetsWishlistByUser(userService.getUserId().get());
+		String userId = userService.getUserId().get();
+		Optional<Wishlist> wishlist = wishlistRepo.findCurrentWishlistByUser(userId);
+		if(wishlist.isPresent()) {
+			return Optional.ofNullable(wishlist.get().getTarget());
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	@Transactional(readOnly=true)
@@ -91,6 +97,26 @@ public class WishlistService {
 	@Transactional(readOnly=true)
 	public Optional<Wishlist> getWishlistById(Integer wishlistId) {
 		return wishlistRepo.findById(wishlistId);
+	}
+	
+	@Transactional(readOnly=true)
+	public Optional<User> getGiftReceiver(Integer wishlistId) {
+		Optional<Wishlist> giftersWishlist = getWishlistById(wishlistId);
+		if(!giftersWishlist.isPresent()) {
+			return Optional.empty();
+		}
+		
+		Wishlist target = giftersWishlist.get().getTarget();
+		
+		while(!target.getUserHasGiven() && target.getId() != giftersWishlist.get().getId()) {
+			target = target.getTarget();
+			if(target == null) {
+				throw new IllegalStateException("santa chain is broken");
+			} 
+		}
+		
+		return Optional.of(target.getUser());
+		
 	}
 
 }

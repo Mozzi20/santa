@@ -10,13 +10,18 @@
         
         <div class="jumbotron bg-secondary mt-3 text-light rounded">
 
-            <div>
+            <div class="col-5" th:if="${event.wishlistDeadlineDate.before(#dates.createNow())}">
                 <h3>Vem ska presenten till?</h3>
-                <div>
-
+                <div th:if="${receiver}">
+                    <div class="alert alert-success" th:inline="text">
+                        Presenten ska till [[${receiver}]]
+                    </div>
                 </div>
                 <form th:action="@{/moderator/gift_lookup}" method="post">
-                    <input type="number" name="wishlistId" id="wishlistId">
+                    <div class="form-group">
+                        <label>Nummer på present eller något?</label>         
+                        <input class="form-control" type="number" name="wishlistId" id="wishlistId">
+                    </div>
                     <button class="btn btn-primary" type="submit">Lookup</button>
                 </form>
             </div>
@@ -26,9 +31,9 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Namn</th>
-                        <th>Santa</th>
-                        <th>UserHasGiven</th>
+                        <th>Användare</th>
+                        <th>Användare är santa åt</th>
+                        <th>Present given</th>
                         <th>Hantera</th>
                     </tr>
                 </thead>
@@ -36,7 +41,7 @@
                     <tr th:each="wishlist : ${event.wishlists}" th:object="${wishlist}">
                         <td th:text="*{id}"></td>
                         <td th:text="*{user.email}"></td>
-                        <td th:text="*{santa?.email}"></td>
+                        <td th:text="*{target?.user.email}"></td>
                         <td th:text="${wishlist.userHasGiven ? 'Ja' : 'Nej'}"></td>
                         <td>
                             <form th:action="@{/moderator/wishlist}" method="post">

@@ -34,7 +34,7 @@ public class Wishlist {
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	private User santa;
+	private Wishlist target;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Event event;

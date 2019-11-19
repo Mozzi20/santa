@@ -14,7 +14,4 @@ public interface WishlistRepository extends CrudRepository<Wishlist, Integer> {
 	@Query("SELECT wishlist FROM Wishlist wishlist WHERE wishlist.user.id = :userId AND wishlist.event.startDate < CURRENT_TIMESTAMP AND wishlist.event.endDate > CURRENT_TIMESTAMP")
 	public Optional<Wishlist> findCurrentWishlistByUser(String userId);
 
-	@Query("SELECT wishlist FROM Wishlist wishlist WHERE wishlist.santa.id = :userId AND wishlist.event.startDate < CURRENT_TIMESTAMP AND wishlist.event.endDate > CURRENT_TIMESTAMP")
-	public Optional<Wishlist> findCurrentTargetsWishlistByUser(String userId);
-
 }

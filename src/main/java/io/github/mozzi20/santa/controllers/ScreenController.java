@@ -24,7 +24,7 @@ public class ScreenController {
 		Optional<Event> event = eventService.getCurrentEvent();
 		model.addAttribute("ongoing", event.isPresent());
 		if(event.isPresent()) {
-			model.addAttribute("afterDeadline", event.get().getWishlistDeadlineDate().after(new Date()));
+			model.addAttribute("registrationIsOpen", event.get().getWishlistDeadlineDate().after(new Date()));
 			model.addAttribute("endDate", event.get().getEndDate());
 			model.addAttribute("wishlistDeadlineDate", event.get().getWishlistDeadlineDate());
 		}

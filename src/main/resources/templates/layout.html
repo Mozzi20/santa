@@ -17,7 +17,6 @@
         <nav class="navbar ml-3">
             <a class="navbar-brand text-light" href="/"><h1>Secret Santa</h1></a>
             <ul class="nav">
-                
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MODERATOR')">
                     <a class="nav-link text-light" href="/moderator">Moderatorpanel</a>
                 </li>

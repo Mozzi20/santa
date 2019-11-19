@@ -34,15 +34,16 @@ public class WishlistController {
 		}
 		
 		model.addAttribute(event.get());
-		
+		Optional<Wishlist> usersWishlist = wishlistService.getWishlist();
 		if(event.get().getWishlistDeadlineDate().after(new Date())) {
-			wishlistService.getWishlist().ifPresent(model::addAttribute);
+			usersWishlist.ifPresent(model::addAttribute);
 			return "wishlist";
 		} else {
 			Optional<Wishlist> wishlist = wishlistService.getTargetsWishlist();
 			if(!wishlist.isPresent()) {
 				return "toolate";
 			}
+			model.addAttribute("usersWishlistId", usersWishlist.get().getId());
 			model.addAttribute("wishlist", wishlist.get());
 			return "targetsWishlist";
 		}

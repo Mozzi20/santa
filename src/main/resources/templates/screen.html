@@ -17,14 +17,14 @@
                 <br>
                 <br>
                 <div th:if="${ongoing}" th:remove="tag">
-                    <div th:if="${afterDeadline}">
-                        <h2>
-                            Glöm inte att lämna presenterna innan <span th:text="${#dates.format(endDate, 'dd/MM')}"></span>!
-                        </h2>
-                    </div>
-                    <div th:unless="${afterDeadline}">
+                    <div th:if="${registrationIsOpen}">
                         <h2>
                             Registera er innan <span th:text="${#dates.format(wishlistDeadlineDate, 'dd/MM')}"></span>! Mer info på hemsidan.
+                        </h2>
+                    </div>
+                    <div th:unless="${registrationIsOpen}">
+                        <h2>
+                            Glöm inte att lämna presenterna innan <span th:text="${#dates.format(endDate, 'dd/MM')}"></span>!
                         </h2>
                     </div>
                 </div>
