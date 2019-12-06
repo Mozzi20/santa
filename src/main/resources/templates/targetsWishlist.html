@@ -16,12 +16,12 @@
                 Kom ihåg att det inte behöver var dyrt, eller kosta pengar alls.
                 Så länge personer blir glad av din present så har du lyckets som secret santa!
             </p>
-            <p>
+            <div class="alert alert-warning">
                 När du väl har fixat en present så ska du lämna den i skolan (det är skyltat). För att vi ska veta vem
                 presenten ska till <b>måste</b> du skriva <b th:text="${usersWishlistId}">000</b>
                 på paketet. Om du inte gör detta så kommer vi inte heller veta att du har lämnat en present
-                och då kommer du inte få en present.
-            </p>
+                och då kommer du inte få en present. Presenten måste lämnas innan <b th:text="${#dates.format(event.endDate, 'dd/MM')}"></b>.
+            </div>
             <div>
 
             </div>
